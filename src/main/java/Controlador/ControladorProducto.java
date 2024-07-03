@@ -35,12 +35,53 @@ public class ControladorProducto extends HttpServlet {
 		TblProductocl3 producto=new TblProductocl3();
 		ClassProductoImp crud=new ClassProductoImp();
 		
+		//recuperamos la accion y codigo
+				String accion=request.getParameter("accion");
+				//aplicamos una condicion...
+				if(accion!=null){
+					switch(accion){
+					case "Modificar":
+						int codigo=Integer.parseInt(request.getParameter("cod"));
+						//asignar el codigo...
+						producto.setIdproductocl3(codigo);
+						TblProductocl3 buscarcod=crud.BuscarProducto(producto);
+						//enviar los valores buscados por codigo de la base de datos
+						//al formulario actualizar..
+						request.setAttribute("codigo",buscarcod.getIdproductocl3());
+						request.setAttribute("nombre",buscarcod.getNombrecl3());
+						request.setAttribute("precioventa",buscarcod.getPrecioventacl3());
+						request.setAttribute("preciocomp",buscarcod.getPreciocompcl3());
+						request.setAttribute("estado",buscarcod.getEstadocl3());
+						request.setAttribute("descrip",buscarcod.getDescripcl3());
+						
+						//redireccionar..
+						request.getRequestDispatcher("/FormActualizarProducto.jsp").forward(request, response);
+						//salimos
+						break;
+					case "Eliminar":
+					    int codeliminar = Integer.parseInt(request.getParameter("cod"));
+					    // asignamos el codigo a eliminar
+					    producto.setIdproductocl3(codeliminar);
+					    // invocamos al metodo eliminar...
+					    crud.EliminarProducto(producto);
+					    // redirigir al listado de productos
+					    response.sendRedirect(request.getContextPath() + "/ControladorProducto?accion=Listar");
+					    break;
+
+					
+					case "Listar":
+		
+		
 		List<TblProductocl3> listadoproducto=crud.ListadoProducto();
 		
 		//invocamos el listado 
 		request.setAttribute("listadoproducto", listadoproducto);
 		//redireccionamos
 		request.getRequestDispatcher("/ListadoProductos.jsp").forward(request, response);
+		//salimos
+		break;
+					}
+				}
 	}
 
 	/**
@@ -56,6 +97,8 @@ public class ControladorProducto extends HttpServlet {
 				String estado=request.getParameter("estado");
 				String descrip=request.getParameter("descrip");
 				
+			//	List<TblProductocl3> listadoproductos=null;
+				
 				//instanciar las entidades
 				TblProductocl3 producto=new TblProductocl3();
 				ClassProductoImp crud=new ClassProductoImp();
@@ -65,6 +108,17 @@ public class ControladorProducto extends HttpServlet {
 				producto.setPreciocompcl3(precioven);
 				producto.setEstadocl3(estado);
 				producto.setDescripcl3(descrip);
+			//	if(nombre!=null){
+					//recupero el nombre a  actualizar...
+					
+					//asigno el codigo a actualizar
+				//	producto.setNombrecl3(nombre);
+					//invoco al metodo actualizar
+				//	crud.ActualizarProducto(producto);
+					//actualizador listado de clientes
+				//	listadoproductos=crud.ListadoProducto();
+					
+				//}else{	
 				//invocacion del metodo registrar
 				crud.RegistrarProducto(producto);
 				//actualizar listado de los productos
@@ -78,4 +132,5 @@ public class ControladorProducto extends HttpServlet {
 				
 	}
 
-}
+	}
+//}

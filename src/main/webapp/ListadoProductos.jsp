@@ -50,6 +50,9 @@ if(listadoproducto!=null){
 		<td><%=lis.getPreciocompcl3() %></td>
 		<td><%=lis.getEstadocl3() %></td>
 		<td><%=lis.getDescripcl3() %></td>
+		<td><a href="ControladorProducto?accion=Eliminar&cod=<%=lis.getIdproductocl3() %>">Eliminar</a></td>
+	    <td><a href="ControladorProducto?accion=Modificar&cod=<%=lis.getIdproductocl3()%>">Actualizar</a></td>
+		
 		</tr>
 
 <%

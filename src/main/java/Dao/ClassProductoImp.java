@@ -91,4 +91,23 @@ public class ClassProductoImp implements IProducto {
 				
 			}   //fin del metodo eliminar
 
+
+	@Override
+	public TblProductocl3 BuscarProducto(TblProductocl3 producto) {
+		//establecemos la conexion con la unidad de persistencia..
+				EntityManagerFactory fabr=Persistence.createEntityManagerFactory("ProyectoCL3");
+				//gestionar las entidads
+				EntityManager em=fabr.createEntityManager();
+				//iniciamos la transaccion
+				em.getTransaction().begin();
+				//recuperamos el codigo a buscar
+				TblProductocl3 busproduc=em.find(TblProductocl3.class,producto.getIdproductocl3());
+				//confirmamos 
+				em.getTransaction().commit();
+				//cerramos
+				em.close();
+				return busproduc;
+			}  //fin del metodo buscar
+	
+
 }
