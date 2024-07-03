@@ -48,4 +48,47 @@ public class ClassProductoImp implements IProducto {
 				return listadoproducto;
 	}
 
+
+	@Override
+	public void ActualizarProducto(TblProductocl3 producto) {
+		//establecemos conexion con la unidad de persistencia...
+				EntityManagerFactory fabr=Persistence.createEntityManagerFactory("ProyectoCL3");
+				//permite gestionar entidades
+				EntityManager em=fabr.createEntityManager();
+				//iniciar transaccion
+				em.getTransaction().begin();
+				//actualizamos
+				em.merge(producto);
+				//comfirmamos 
+				em.getTransaction().commit();
+				//cerramos
+				em.close();
+				
+				
+			}   //fin del metodo actualizar 
+		
+	
+
+
+	@Override
+	public void EliminarProducto(TblProductocl3 producto) {
+		//establecemos la conexion con unidad de persistencia.
+				EntityManagerFactory fabr=Persistence.createEntityManagerFactory("ProyectoCL3");
+				//gestionar las entidades
+				EntityManager em=fabr.createEntityManager();
+				//iniciamos la transaccion
+				em.getTransaction().begin();
+				//recuperamos el codigo a eliminar
+				TblProductocl3 elim=em.merge(producto);
+				//procedemos a eliminar el registro
+				em.remove(elim);
+				//emitimos mensaje por consola
+				System.out.println("Producto eliminado de la base de datos");
+				//confirmamos
+				em.getTransaction().commit();
+				//cerramos
+				em.close();
+				
+			}   //fin del metodo eliminar
+
 }
